@@ -13,7 +13,7 @@ services:
       - "ES_JAVA_OPTS=-Xms8192m -Xmx8192m"
 
   fluent-bit:
-    image: fluent/fluent-bit:1.7.9
+    image: fluent/fluent-bit:1.5
     volumes:
       - ./fluent-bit/conf:/fluent-bit/etc
     links:
