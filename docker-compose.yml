@@ -10,7 +10,7 @@ services:
       - cluster.name=es-docker-cluster
       - bootstrap.memory_lock=false
       - cluster.initial_master_nodes=elasticsearch
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "ES_JAVA_OPTS=-Xms8192m -Xmx8192m"
 
   fluent-bit:
     image: fluent/fluent-bit:1.5
@@ -20,8 +20,8 @@ services:
       - "elasticsearch"
     ports:
       - 24224:24224
-      - 5140:5140/udp
-      - 2020:2020
+      #- 5140:5140/udp
+      #- 2020:2020
     logging:
         driver: "json-file"
         options:
