@@ -1,6 +1,17 @@
 version: '2.2'
 services:
 
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.1
+    ports:
+      - "9200:9200"
+    environment:
+      - node.name=elasticsearch
+      - cluster.name=es-docker-cluster
+      - bootstrap.memory_lock=false
+      - cluster.initial_master_nodes=elasticsearch
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+
   fluent-bit:
     image: fluent/fluent-bit:1.5
     volumes:
@@ -16,37 +27,21 @@ services:
         options:
             max-size: 100m
             max-file: "5"
-    networks:
-      - elastic
-
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.1
-    container_name: es01
-    ports:
-      - "9200:9200"
-    networks:
-      - elastic
-    environment:
-      - node.name=es01
-      - cluster.name=es-docker-cluster
-      - bootstrap.memory_lock=false
-      - cluster.initial_master_nodes=es01
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
 
   kibana:
     image: docker.elastic.co/kibana/kibana:7.8.1
-    container_name: kib01
     links:
       - "elasticsearch"
     ports:
       - 5601:5601
     environment:
-      ELASTICSEARCH_URL: http://es01:9200
-      ELASTICSEARCH_HOSTS: http://es01:9200
-    networks:
-      - elastic
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
 
 networks:
-  elastic:
-    driver: bridge
+  default:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.100.0/24
 
