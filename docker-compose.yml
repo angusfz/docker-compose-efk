@@ -4,7 +4,7 @@ services:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.15.1
     ports:
-      - "9200:9200"
+      - 9200:9200
     environment:
       - node.name=elasticsearch
       - cluster.name=es-docker-cluster
@@ -13,15 +13,17 @@ services:
       - "ES_JAVA_OPTS=-Xms8192m -Xmx8192m"
 
   fluent-bit:
-    image: fluent/fluent-bit:1.5
+    image: fluent/fluent-bit:1.7.9
     volumes:
       - ./fluent-bit/conf:/fluent-bit/etc
     links:
-      - "elasticsearch"
+      - elasticsearch
     ports:
       - 24224:24224
       #- 5140:5140/udp
       #- 2020:2020
+    depends_on:
+      - elasticsearch
     logging:
         driver: "json-file"
         options:
@@ -31,7 +33,9 @@ services:
   kibana:
     image: docker.elastic.co/kibana/kibana:7.15.1
     links:
-      - "elasticsearch"
+      - elasticsearch
+    depends_on:
+      - elasticsearch
     ports:
       - 5601:5601
     environment:
