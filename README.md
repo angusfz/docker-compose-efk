@@ -1,5 +1,7 @@
-Docker compose file for setting up a EFK service
-================================================
+# Docker-compose for EFK 
+- Elasticsearch
+- Fluent Bit
+- Kibana
 
 A basic docker compose file that will set up Elasticsearch, Fluent Bit, and Kibana.
 
@@ -19,10 +21,77 @@ logger -d -n 127.0.0.1 --port 5140 "hello"
 
 ### 使用方式
 
+#### Elsaticserach
+- 加大預設 mmapfs 避免 es 啟動錯誤 (https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html)
 ```bash
 $ sudo bash
-
-# 加大預設 mmapfs 避免 es 啟動錯誤 see https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html
 $ sysctl -w vm.max_map_count=262144
+```
+
+- 產生 es certs
+```bash
+$ docker-compose -f create-certs.yml run --rm create_certs
+
+Archive:  /certs/bundle.zip
+   creating: /certs/ca/
+  inflating: /certs/ca/ca.crt        
+   creating: /certs/es01/
+  inflating: /certs/es01/es01.crt    
+  inflating: /certs/es01/es01.key    
+   creating: /certs/es02/
+  inflating: /certs/es02/es02.crt    
+  inflating: /certs/es02/es02.key    
+   creating: /certs/es03/
+  inflating: /certs/es03/es03.crt    
+  inflating: /certs/es03/es03.key    
+   creating: /certs/kib01/
+  inflating: /certs/kib01/kib01.crt  
+  inflating: /certs/kib01/kib01.key  
+```
+
+- 啟動 docker-compose
+```bash
 $ docker-compose up -d
 ```
+
+- 設定 elasticsearch password
+```bash
+$ docker exec es01 /bin/bash -c "bin/elasticsearch-setup-passwords \
+auto --batch --url https://es01:9200"
+Changed password for user apm_system
+PASSWORD apm_system = vl2MOM35KMYB92zeaZqT
+
+Changed password for user kibana_system
+PASSWORD kibana_system = t9O0n51j2sO1mVwMtD2M
+
+Changed password for user kibana
+PASSWORD kibana = t9O0n51j2sO1mVwMtD2M
+
+Changed password for user logstash_system
+PASSWORD logstash_system = 5aVWfZpadwfszn9rb26I
+
+Changed password for user beats_system
+PASSWORD beats_system = YTMuflpYjXL5MohP1tyq
+
+Changed password for user remote_monitoring_user
+PASSWORD remote_monitoring_user = l2saGblzgt1ZWm27UPFG
+
+Changed password for user elastic
+PASSWORD elastic = bInDKepP88AlGwi733Zx
+```
+
+- 取得上一步驟 `kibana_system` password 修改 docker-compose kib01
+```yaml
+      ELASTICSEARCH_PASSWORD: t9O0n51j2sO1mVwMtD2M
+```
+
+- 重新啟動 docker-compose
+```bash
+$ docker-compose stop
+$ docker-compose up -d
+```
+
+- 使用 `elastic` password 登入 kibana (https://localhost:5601)
+
+## Reference
+- https://www.elastic.co/guide/en/elastic-stack-get-started/current/get-started-docker.html
