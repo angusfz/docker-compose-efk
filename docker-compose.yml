@@ -154,7 +154,7 @@ services:
 
   fd01:
     image: fluent/fluentd:${FLUENTD_VESION}
-    container_name: fbit01
+    container_name: fd01
     volumes:
       - ./config/fluent-bit/:/fluent-bit/etc
     ports:
