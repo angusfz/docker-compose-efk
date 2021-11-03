@@ -59,25 +59,25 @@ $ docker-compose up -d
 $ docker exec es01 /bin/bash -c "bin/elasticsearch-setup-passwords \
 auto --batch --url https://es01:9200"
 Changed password for user apm_system
-PASSWORD apm_system = vl2MOM35KMYB92zeaZqT
+PASSWORD apm_system = qOufxoBPtaWAASO2BSbT
 
 Changed password for user kibana_system
-PASSWORD kibana_system = t9O0n51j2sO1mVwMtD2M
+PASSWORD kibana_system = Yhsqh1YcalpO8eTQF3UZ
 
 Changed password for user kibana
-PASSWORD kibana = t9O0n51j2sO1mVwMtD2M
+PASSWORD kibana = Yhsqh1YcalpO8eTQF3UZ
 
 Changed password for user logstash_system
-PASSWORD logstash_system = 5aVWfZpadwfszn9rb26I
+PASSWORD logstash_system = Bpl23sHOLweBvzKhqOrB
 
 Changed password for user beats_system
-PASSWORD beats_system = YTMuflpYjXL5MohP1tyq
+PASSWORD beats_system = Z4KiVwbat7i2JvNree0t
 
 Changed password for user remote_monitoring_user
-PASSWORD remote_monitoring_user = l2saGblzgt1ZWm27UPFG
+PASSWORD remote_monitoring_user = UlRa7vORpv5IRf544Veq
 
 Changed password for user elastic
-PASSWORD elastic = bInDKepP88AlGwi733Zx
+PASSWORD elastic = ISZIF78ohvyCZhdgv1M5
 ```
 
 - 取得上一步驟 `kibana_system` password 修改 docker-compose kib01

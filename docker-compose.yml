@@ -123,7 +123,7 @@ services:
       ELASTICSEARCH_URL: https://es01:9200
       ELASTICSEARCH_HOSTS: https://es01:9200
       ELASTICSEARCH_USERNAME: kibana_system
-      ELASTICSEARCH_PASSWORD: t9O0n51j2sO1mVwMtD2M
+      ELASTICSEARCH_PASSWORD: Yhsqh1YcalpO8eTQF3UZ
       ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES: $CERTS_DIR/ca/ca.crt
       SERVER_SSL_ENABLED: "true"
       SERVER_SSL_KEY: $CERTS_DIR/kib01/kib01.key
@@ -153,13 +153,15 @@ services:
       <<: *logging-config
 
   fd01:
-    image: fluent/fluentd:${FLUENTD_VESION}
+    build: ./config/fluentd
+    #image: fluent/fluentd:${FLUENTD_VESION}
     container_name: fd01
     volumes:
-      - ./config/fluent-bit/:/fluent-bit/etc
+      - ./config/fluentd:/fluentd/etc/
     ports:
       - 24224:24224
       - "24224:24224/udp"
+      - 9880:9880
     depends_on:
       - es01
       - es02
