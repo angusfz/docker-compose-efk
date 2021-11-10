@@ -1,6 +1,7 @@
 # Docker-compose for EFK 
 - Elasticsearch
 - Fluent Bit
+- Fluentd
 - Kibana
 
 A basic docker compose file that will set up Elasticsearch, Fluent Bit, and Kibana.
