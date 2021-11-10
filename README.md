@@ -25,8 +25,7 @@ logger -d -n 127.0.0.1 --port 5140 "hello"
 #### Elsaticserach
 - 加大預設 mmapfs 避免 es 啟動錯誤 (https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html)
 ```bash
-$ sudo bash
-$ sysctl -w vm.max_map_count=262144
+$ sudo sysctl -w vm.max_map_count=262144
 ```
 
 - 產生 es certs
