@@ -85,6 +85,12 @@ PASSWORD elastic = ISZIF78ohvyCZhdgv1M5
       ELASTICSEARCH_PASSWORD: t9O0n51j2sO1mVwMtD2M
 ```
 
+- 取得上一步驟 `elastic` password 修改 config/fluentd/fluent.conf
+```txt
+    user elastic
+    password ISZIF78ohvyCZhdgv1M5
+```
+
 - 重新啟動 docker-compose
 ```bash
 $ docker-compose stop
