@@ -79,6 +79,7 @@ PASSWORD remote_monitoring_user = UlRa7vORpv5IRf544Veq
 Changed password for user elastic
 PASSWORD elastic = ISZIF78ohvyCZhdgv1M5
 ```
+Note: 如果上述指令無法成功, 請服用 `docker volume prune` 清除 volume 
 
 - 取得上一步驟 `kibana_system` password 修改 docker-compose kib01
 ```yaml
@@ -101,3 +102,4 @@ $ docker-compose up -d
 
 ## Reference
 - https://www.elastic.co/guide/en/elastic-stack-get-started/current/get-started-docker.html
+
